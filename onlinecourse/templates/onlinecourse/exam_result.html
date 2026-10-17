@@ -3,10 +3,10 @@
 {% block title %}Exam Result - {{ course.name }} | IBM Online Course App{% endblock %}
 
 {% block content %}
-<div class="container mt-4 mb-5">
+<div class="container mt-3 mb-5">
     <!-- Breadcrumb -->
-    <nav aria-label="breadcrumb" class="mb-4">
-        <ol class="breadcrumb">
+    <nav aria-label="breadcrumb" class="mb-3">
+        <ol class="breadcrumb mb-0">
             <li class="breadcrumb-item"><a href="{% url 'onlinecourse:index' %}">Courses</a></li>
             <li class="breadcrumb-item"><a href="{% url 'onlinecourse:course_details' course.id %}">{{ course.name }}</a></li>
             <li class="breadcrumb-item active" aria-current="page">Exam Result</li>
@@ -15,57 +15,57 @@
 
     <!-- Result Banner -->
     {% if is_passed %}
-        <div class="alert alert-success border-0 shadow-sm p-4 p-md-5 mb-4 rounded-4 text-center" id="congratulations-banner" style="background: linear-gradient(135deg, #0e6027 0%, #198754 100%); color: white;">
-            <div class="mb-3">
-                <i class="bi bi-patch-check-fill display-3 text-warning"></i>
+        <div class="alert alert-success border-0 shadow-sm p-3 p-md-4 mb-3 rounded-3 text-center" id="congratulations-banner" style="background: linear-gradient(135deg, #0e6027 0%, #198754 100%); color: white;">
+            <div class="mb-2">
+                <i class="bi bi-patch-check-fill fs-1 text-warning"></i>
             </div>
-            <h1 class="display-5 fw-bold mb-2 text-white">Congratulations! You Passed the Exam!</h1>
-            <p class="lead mb-0 text-white-50">
+            <h1 class="h2 fw-bold mb-1 text-white">Congratulations! You Passed the Exam!</h1>
+            <p class="mb-0 text-white-50">
                 Outstanding work! You have successfully demonstrated mastery of the curriculum for <strong>{{ course.name }}</strong>.
             </p>
         </div>
     {% else %}
-        <div class="alert alert-danger border-0 shadow-sm p-4 p-md-5 mb-4 rounded-4 text-center" id="failure-banner" style="background: linear-gradient(135deg, #a2191f 0%, #da1e28 100%); color: white;">
-            <div class="mb-3">
-                <i class="bi bi-x-octagon-fill display-3 text-white"></i>
+        <div class="alert alert-danger border-0 shadow-sm p-3 p-md-4 mb-3 rounded-3 text-center" id="failure-banner" style="background: linear-gradient(135deg, #a2191f 0%, #da1e28 100%); color: white;">
+            <div class="mb-2">
+                <i class="bi bi-x-octagon-fill fs-1 text-white"></i>
             </div>
-            <h1 class="display-5 fw-bold mb-2 text-white">Exam Attempt Not Passed</h1>
-            <p class="lead mb-0 text-white-50">
+            <h1 class="h2 fw-bold mb-1 text-white">Exam Attempt Not Passed</h1>
+            <p class="mb-0 text-white-50">
                 You scored below the passing threshold of <strong>{{ passing_threshold }}%</strong>. Please review the material and try again.
             </p>
         </div>
     {% endif %}
 
     <!-- Score Metrics Overview Cards -->
-    <div class="row g-3 mb-4">
-        <div class="col-md-3">
+    <div class="row g-2 mb-3">
+        <div class="col-6 col-md-3">
             <div class="card card-custom text-center p-3 h-100">
                 <span class="text-muted small text-uppercase fw-bold">Calculated Score</span>
-                <h2 class="display-6 fw-bold mb-0 {% if is_passed %}text-success{% else %}text-danger{% endif %}" id="score-percentage">
+                <h3 class="fw-bold mb-0 {% if is_passed %}text-success{% else %}text-danger{% endif %}" id="score-percentage">
                     {{ score_percentage }}%
-                </h2>
-                <small class="text-muted">Passing threshold: {{ passing_threshold }}%</small>
+                </h3>
+                <small class="text-muted">Passing score: {{ passing_threshold }}%</small>
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-6 col-md-3">
             <div class="card card-custom text-center p-3 h-100">
                 <span class="text-muted small text-uppercase fw-bold">Questions Correct</span>
-                <h2 class="display-6 fw-bold mb-0 text-primary" id="correct-questions">
+                <h3 class="fw-bold mb-0 text-primary" id="correct-questions">
                     {{ correct_count }} / {{ total_questions }}
-                </h2>
-                <small class="text-muted">Total Questions Evaluated</small>
+                </h3>
+                <small class="text-muted">Evaluated Questions</small>
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-6 col-md-3">
             <div class="card card-custom text-center p-3 h-100">
                 <span class="text-muted small text-uppercase fw-bold">Exam Status</span>
                 <div class="my-auto">
                     {% if is_passed %}
-                        <span class="badge bg-success fs-5 px-3 py-2 rounded-pill" id="exam-status-badge">
+                        <span class="badge bg-success fs-6 px-3 py-1 rounded-pill" id="exam-status-badge">
                             <i class="bi bi-check-circle me-1"></i> PASSED
                         </span>
                     {% else %}
-                        <span class="badge bg-danger fs-5 px-3 py-2 rounded-pill" id="exam-status-badge">
+                        <span class="badge bg-danger fs-6 px-3 py-1 rounded-pill" id="exam-status-badge">
                             <i class="bi bi-exclamation-triangle me-1"></i> FAILED
                         </span>
                     {% endif %}
@@ -73,62 +73,64 @@
                 <small class="text-muted d-block mt-1">Verified Evaluation</small>
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-6 col-md-3">
             <div class="card card-custom text-center p-3 h-100">
-                <span class="text-muted small text-uppercase fw-bold">Submission Timestamp</span>
-                <h5 class="fw-bold mb-0 text-dark my-auto" style="font-size: 1.1rem;">
+                <span class="text-muted small text-uppercase fw-bold">Submission Info</span>
+                <h6 class="fw-bold mb-0 text-dark my-auto">
                     {{ submission.submitted_at|date:"M d, Y - H:i" }}
-                </h5>
+                </h6>
                 <small class="text-muted">Submission ID: #{{ submission.id }}</small>
             </div>
         </div>
     </div>
 
     <!-- Detailed Assessment Review -->
-    <div class="card card-custom p-4 mb-4 shadow-sm">
+    <div class="card card-custom p-3 p-md-4 mb-3 shadow-sm">
         <div class="d-flex justify-content-between align-items-center mb-3">
-            <h3 class="fw-bold mb-0 text-dark">
+            <h4 class="fw-bold mb-0 text-dark">
                 <i class="bi bi-list-check text-primary me-2"></i> Assessment Question Breakdown
-            </h3>
-            <span class="badge badge-ibm px-3 py-2">Detailed Results</span>
+            </h4>
+            <span class="badge badge-ibm px-3 py-2">All {{ total_questions }} Questions Evaluated</span>
         </div>
-        <hr class="mt-2 mb-4">
+        <hr class="mt-1 mb-3">
 
         {% for q_res in questions_results %}
-            <div class="card mb-4 border-0 shadow-sm rounded-3 overflow-hidden {% if q_res.is_correct %}border-start border-success border-5{% else %}border-start border-danger border-5{% endif %}">
-                <div class="card-header bg-light d-flex justify-content-between align-items-center py-3">
-                    <h5 class="fw-bold mb-0 text-dark">
-                        <span class="text-secondary me-2">Question {{ forloop.counter }}:</span> {{ q_res.question.question_text }}
-                    </h5>
+            <div class="card mb-3 border-0 shadow-sm rounded-3 overflow-hidden {% if q_res.is_correct %}border-start border-success border-4{% else %}border-start border-danger border-4{% endif %}" id="result-q-{{ q_res.question.id }}">
+                <div class="card-header bg-light d-flex justify-content-between align-items-center py-2 px-3">
+                    <h6 class="fw-bold mb-0 text-dark">
+                        <span class="badge bg-dark me-2">Q{{ forloop.counter }}</span> {{ q_res.question.question_text }}
+                    </h6>
                     <div>
                         {% if q_res.is_correct %}
-                            <span class="badge bg-success px-3 py-2">
+                            <span class="badge bg-success px-2 py-1">
                                 <i class="bi bi-check2 me-1"></i> Correct (+{{ q_res.question.grade }} pt)
                             </span>
                         {% else %}
-                            <span class="badge bg-danger px-3 py-2">
+                            <span class="badge bg-danger px-2 py-1">
                                 <i class="bi bi-x me-1"></i> Incorrect (0 / {{ q_res.question.grade }} pt)
                             </span>
                         {% endif %}
                     </div>
                 </div>
-                <div class="card-body p-3">
-                    <div class="list-group">
+                <div class="card-body p-2 px-3">
+                    <div class="list-group list-group-flush">
                         {% for choice_info in q_res.choices %}
-                            <div class="list-group-item d-flex justify-content-between align-items-center py-3 {% if choice_info.is_selected and choice_info.is_correct %}list-group-item-success{% elif choice_info.is_selected and not choice_info.is_correct %}list-group-item-danger{% elif choice_info.is_correct %}list-group-item-light border-success{% endif %}">
-                                <div>
+                            <div class="list-group-item d-flex justify-content-between align-items-center py-2 px-2 {% if choice_info.is_selected and choice_info.is_correct %}list-group-item-success rounded{% elif choice_info.is_selected and not choice_info.is_correct %}list-group-item-danger rounded{% elif choice_info.is_correct %}list-group-item-light border-success rounded{% endif %}">
+                                <div class="d-flex align-items-center">
                                     {% if choice_info.is_selected %}
-                                        <i class="bi bi-record-circle-fill text-primary me-2"></i>
+                                        <i class="bi bi-check-circle-fill text-success me-2 fs-5"></i>
                                     {% else %}
                                         <i class="bi bi-circle text-muted me-2"></i>
                                     {% endif %}
-                                    <span class="{% if choice_info.is_selected %}fw-bold{% endif %}">{{ choice_info.choice.choice_text }}</span>
+                                    <span class="{% if choice_info.is_selected %}fw-semibold text-dark{% else %}text-secondary{% endif %}">
+                                        {{ choice_info.choice.choice_text }}
+                                    </span>
                                 </div>
                                 <div>
                                     {% if choice_info.is_selected and choice_info.is_correct %}
-                                        <span class="badge bg-success"><i class="bi bi-check-lg me-1"></i> Your Choice (Correct)</span>
+                                        <span class="badge bg-success"><i class="bi bi-check-lg me-1"></i> Selected &amp; Correct</span>
                                     {% elif choice_info.is_selected and not choice_info.is_correct %}
-                                        <span class="badge bg-danger"><i class="bi bi-x-lg me-1"></i> Your Choice (Wrong)</span>
+                                        <span class="badge bg-danger"><i class="bi bi-x-lg me-1"></i> Selected (Wrong)</span>
                                     {% elif choice_info.is_correct %}
                                         <span class="badge bg-outline-success border border-success text-success"><i class="bi bi-check-circle me-1"></i> Correct Answer</span>
                                     {% endif %}
@@ -142,16 +144,16 @@
     </div>
 
     <!-- Navigation Actions -->
-    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 p-3 bg-light rounded-3">
-        <a href="{% url 'onlinecourse:course_details' course.id %}" class="btn btn-outline-primary btn-lg px-4" id="return-to-course-btn">
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 p-3 bg-light rounded-3 shadow-sm" id="result-page-footer-actions">
+        <a href="{% url 'onlinecourse:course_details' course.id %}" class="btn btn-outline-primary px-4" id="return-to-course-btn">
             <i class="bi bi-arrow-left me-2"></i> Return to Course Details
         </a>
         <div class="d-flex gap-2">
-            <a href="{% url 'onlinecourse:take_exam' course.id %}" class="btn btn-outline-secondary btn-lg px-4">
-                <i class="bi bi-arrow-clockwise me-2"></i> Retake Exam
+            <a href="{% url 'onlinecourse:take_exam' course.id %}" class="btn btn-outline-secondary px-3">
+                <i class="bi bi-arrow-clockwise me-1"></i> Retake Exam
             </a>
-            <a href="{% url 'onlinecourse:index' %}" class="btn btn-ibm-primary btn-lg px-4">
-                <i class="bi bi-grid-fill me-2"></i> Browse All Courses
+            <a href="{% url 'onlinecourse:index' %}" class="btn btn-ibm-primary px-4">
+                <i class="bi bi-grid-fill me-1"></i> Browse All Courses
             </a>
         </div>
     </div>
