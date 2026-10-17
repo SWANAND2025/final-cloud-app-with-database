@@ -1,0 +1,82 @@
+{% extends 'onlinecourse/base.html' %}
+
+{% block title %}Mock Exam - {{ course.name }} | IBM Online Course App{% endblock %}
+
+{% block content %}
+<div class="container mt-4 mb-5">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'onlinecourse:index' %}">Courses</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'onlinecourse:course_details' course.id %}">{{ course.name }}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Mock Exam Assessment</li>
+        </ol>
+    </nav>
+
+    <!-- Exam Header Banner -->
+    <div class="card card-custom mb-4 border-0" style="background: linear-gradient(135deg, #002d9c 0%, #0f62fe 100%); color: white;">
+        <div class="card-body p-4 p-md-5">
+            <span class="badge bg-light text-primary px-3 py-2 mb-2 fw-bold text-uppercase">Course Assessment Test</span>
+            <h1 class="display-6 fw-bold mb-2 text-white">{{ course.name }} — Mock Exam</h1>
+            <p class="lead text-light mb-0">
+                Please review and answer all {{ questions.count }} question{{ questions.count|pluralize }} below. A score of <strong>70% or higher</strong> is required to pass and receive your certificate of completion.
+            </p>
+        </div>
+    </div>
+
+    <!-- Exam Form -->
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            {% if questions %}
+                <form method="post" action="{% url 'onlinecourse:submit' course.id %}" id="take-exam-form">
+                    {% csrf_token %}
+                    
+                    {% for question in questions %}
+                        <div class="card card-custom mb-4 overflow-hidden shadow-sm" id="question-card-{{ question.id }}">
+                            <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center py-3">
+                                <h5 class="fw-bold mb-0 text-white">
+                                    <span class="badge bg-primary me-2">Question {{ forloop.counter }}</span>
+                                    {{ question.question_text }}
+                                </h5>
+                                <span class="badge bg-light text-dark">{{ question.grade }} Point{{ question.grade|pluralize }}</span>
+                            </div>
+                            <div class="card-body p-4">
+                                <p class="text-muted small mb-3">Select the single correct answer below:</p>
+                                <div class="list-group">
+                                    {% for choice in question.choice_set.all %}
+                                        <label class="list-group-item list-group-item-action d-flex align-items-center py-3" style="cursor: pointer;">
+                                            <input class="form-check-input me-3 my-0" type="radio" name="choice_{{ question.id }}" value="{{ choice.id }}" required id="choice_{{ choice.id }}">
+                                            <span class="fs-6">{{ choice.choice_text }}</span>
+                                        </label>
+                                    {% empty %}
+                                        <div class="alert alert-secondary mb-0">No choices configured for this question.</div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                    <!-- Submission Controls -->
+                    <div class="card card-custom p-4 bg-light border-0 shadow-sm mt-4">
+                        <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
+                            <a href="{% url 'onlinecourse:course_details' course.id %}" class="btn btn-outline-secondary px-4">
+                                <i class="bi bi-arrow-left me-1"></i> Cancel &amp; Back to Course
+                            </a>
+                            <button type="submit" class="btn btn-ibm-primary btn-lg px-5 py-3 shadow" id="submit-assessment-btn">
+                                <i class="bi bi-check2-circle me-2"></i> Submit Exam for Evaluation
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            {% else %}
+                <div class="card card-custom p-5 text-center">
+                    <i class="bi bi-journal-x display-4 text-warning mb-3"></i>
+                    <h3>No Questions Found</h3>
+                    <p class="text-muted">There are currently no active questions for this course exam.</p>
+                    <a href="{% url 'onlinecourse:course_details' course.id %}" class="btn btn-primary mt-3">Return to Course</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
